@@ -136,18 +136,16 @@
 ;; enable autopep8 formatting on save
 (require 'py-autopep8)
 (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+
 (require 'flycheck-mypy)
-(add-hook 'elpy-mode-hook 'flycheck-mode)
 (add-to-list 'flycheck-python-mypy-args "--ignore-missing-imports")
 ;; disable other flycheck-checkers for flycheck to select python-mypy checker
 ;; this makes flycheck mode to ignore the checkers on flycheck-checkers list
 (setq-default flycheck-disabled-checkers '(python-pylint python-pycompile))
 (flycheck-add-next-checker 'python-flake8 'python-mypy t)
-;; (setq-default flycheck-disabled-checkers '(python-flake8
-;; 					   python-pylint))
 
+;; activate upcase-region
 (put 'upcase-region 'disabled nil)
-
 
 ;; --- below this part is taken from macbook 
 
