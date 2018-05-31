@@ -6,30 +6,59 @@
 (require 'package)
 
 (add-to-list 'package-archives
-       '("melpa" . "http://melpa.org/packages/") t)
+	     '("melpa" . "http://melpa.org/packages/") t)
 (add-to-list 'package-archives
 	     '("gnu" .  "http://elpa.gnu.org/packages/") t)
 
 (package-initialize)
+
 (when (not package-archive-contents)
   (package-refresh-contents))
 
 (defvar myPackages
-  '(better-defaults
-    zenburn-theme
-    elpy
-    highlight-indentation
-    flycheck
-    flycheck-mypy
-    py-autopep8))
+   '(highlight-indentation
+     better-defaults
+     dired-subtree
+     magit
+     yasnippet
+     intero
+     company-auctex
+     haskell-mode
+     sclang-extensions
+     slime
+     nhexl-mode
+     magit
+     zenburn-theme
+     material-theme
+     flycheck
+     flycheck-mypy
+     py-autopep8
+     rope-read-mode
+     pipenv
+     elpy
+     ein
+     auctex
+     ))
 
 (mapc #'(lambda (package)
 	  (unless (package-installed-p package)
 	    (package-install package)))
       myPackages)
 
-;; BASIC CUSTOMIZATION
-;; --------------------------------------
+;; Set path to dependencies
+(setq settings-dir
+      (expand-file-name "settings" user-emacs-directory))
+
+;; Set up load path
+(add-to-list 'load-path settings-dir)
+
+;; Keep emacs Custom-settings in separate file
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(load custom-file)
+
+;; Setup appearance including theme
+(require 'appearance)
+
 ;; Turn off mouse interface early in startup to avoid momentary display
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
@@ -81,13 +110,12 @@
     (linum-mode -1)))
 
 ;; Make dired less verbose
+(require 'dired-subtree)
+(define-key dired-mode-map "i" 'dired-subtree-insert)
+(define-key dired-mode-map ";" 'dired-subtree-remove)
 (add-hook 'dired-mode-hook
       (lambda ()
-        (dired-hide-details-mode)
-        (dired-sort-toggle-or-edit)))
-
-;; load zenburn theme
-(load-theme 'zenburn t)
+        (dired-hide-details-mode)))
 
 ;; activate company mode for all buffers
 (add-hook 'after-init-hook 'global-company-mode)
@@ -95,11 +123,10 @@
 ;;hide passwords automatically
 (add-hook 'comint-output-filter-functions
 	  'comint-watch-for-password-prompt)
-;; (bindings--define-key dired-mode-map
-;;     ("i", dired-subtree-insert)
-;;   (";", dired-subtree-remove))
+
+
 (elpy-enable)
-(elpy-use-ipython)
+;;(elpy-use-ipython)
 
 ;; use flycheck not flymake with elpy
 (when (require 'flycheck nil t)
@@ -111,69 +138,18 @@
 (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 (require 'flycheck-mypy)
 (add-hook 'elpy-mode-hook 'flycheck-mode)
+(add-to-list 'flycheck-python-mypy-args "--ignore-missing-imports")
 ;; disable other flycheck-checkers for flycheck to select python-mypy checker
 ;; this makes flycheck mode to ignore the checkers on flycheck-checkers list
-;;(setq-default flycheck-disabled-checkers '(python-flake8))
+(setq-default flycheck-disabled-checkers '(python-pylint python-pycompile))
 (flycheck-add-next-checker 'python-flake8 'python-mypy t)
 ;; (setq-default flycheck-disabled-checkers '(python-flake8
 ;; 					   python-pylint))
 
 (put 'upcase-region 'disabled nil)
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("444238426b59b360fb74f46b521933f126778777c68c67841c31e0a68b0cc920" default)))
- '(package-selected-packages
-   (quote
-    (company-auctex haskell-mode sclang-extensions slime auctex pipenv tao-theme nhexl-mode dired-subtree rope-read-mode magit zenburn-theme py-autopep8 material-theme flycheck elpy ein better-defaults))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-
-;; snorlax original customs
-;; (custom-set-variables
-;;  ;; custom-set-variables was added by Custom.
-;;  ;; If you edit it by hand, you could mess it up, so be careful.
-;;  ;; Your init file should contain only one such instance.
-;;  ;; If there is more than one, they won't work right.
-;;  '(custom-safe-themes
-;;    (quote
-;;     ("444238426b59b360fb74f46b521933f126778777c68c67841c31e0a68b0cc920" default)))
-;;  '(package-selected-packages
-;;    (quote
-;;     (pipenv tao-theme nhexl-mode dired-subtree rope-read-mode magit zenburn-theme py-autopep8 material-theme flycheck elpy ein better-defaults))))
-;; (custom-set-faces
-;;  ;; custom-set-faces was added by Custom.
-;;  ;; If you edit it by hand, you could mess it up, so be careful.
-;;  ;; Your init file should contain only one such instance.
-;;  ;; If there is more than one, they won't work right.
-;;  )
-
-
 
 ;; --- below this part is taken from macbook 
-;; (custom-set-variables
-;;  ;; custom-set-variables was added by Custom.
-;;  ;; If you edit it by hand, you could mess it up, so be careful.
-;;  ;; Your init file should contain only one such instance.
-;;  ;; If there is more than one, they won't work right.
-;;  '(package-selected-packages
-;;    (quote
-;;     (company-auctex haskell-mode sclang-extensions slime ## auctex material-theme better-defaults))))
-;; (custom-set-faces
-;;  ;; custom-set-faces was added by Custom.
-;;  ;; If you edit it by hand, you could mess it up, so be careful.
-;;  ;; Your init file should contain only one such instance.
-;;  ;; If there is more than one, they won't work right.
-;;  )
 
 ;; Set sbcl as default coommon lisp implementation
 (setq inferior-lisp-program "/usr/local/bin/sbcl")
@@ -192,7 +168,7 @@
 
 ;; LaTex configurations
 (load "auctex.el" nil t t)
-(load "preview-latex.el" nil t t)
+;; (load "preview-latex.el" nil t t)
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
 (setq-default TeX-master nil)
