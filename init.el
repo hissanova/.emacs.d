@@ -17,6 +17,8 @@
 
 (defvar myPackages
    '(highlight-indentation
+     elisp-slime-nav
+     diminish
      better-defaults
      dired-subtree
      magit
@@ -27,7 +29,6 @@
      sclang-extensions
      slime
      nhexl-mode
-     magit
      zenburn-theme
      material-theme
      flycheck
@@ -38,6 +39,8 @@
      elpy
      ein
      auctex
+     helm
+     org
      ))
 
 (mapc #'(lambda (package)
@@ -109,6 +112,9 @@
         (goto-line (read-number "Goto line: ")))
     (linum-mode -1)))
 
+;; key bind C-t to (other-window)
+(global-set-key (kbd "C-t") 'other-window)
+
 ;; Make dired less verbose
 (require 'dired-subtree)
 (define-key dired-mode-map "i" 'dired-subtree-insert)
@@ -120,10 +126,13 @@
 ;; activate company mode for all buffers
 (add-hook 'after-init-hook 'global-company-mode)
 
+
 ;;hide passwords automatically
 (add-hook 'comint-output-filter-functions
 	  'comint-watch-for-password-prompt)
 
+;; Load settings for org-mode
+(require 'setup-org-mode)
 
 (elpy-enable)
 ;;(elpy-use-ipython)
@@ -164,17 +173,17 @@
 (package-install 'intero)
 (add-hook 'haskell-mode-hook 'intero-mode)
 
-;; LaTex configurations
-(load "auctex.el" nil t t)
-;; (load "preview-latex.el" nil t t)
-(setq TeX-auto-save t)
-(setq TeX-parse-self t)
-(setq-default TeX-master nil)
-(add-hook 'LaTeX-mode-hook 'visual-line-mode)
-(add-hook 'LaTeX-mode-hook 'flyspell-mode)
-(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
-(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
-(setq reftex-plug-into-AUCTeX t)
-(setq TeX-PDF-mode t)
+;; ;; LaTex configurations
+;; (load "auctex.el" nil t t)
+;; ;; (load "preview-latex.el" nil t t)
+;; (setq TeX-auto-save t)
+;; (setq TeX-parse-self t)
+;; (setq-default TeX-master nil)
+;; (add-hook 'LaTeX-mode-hook 'visual-line-mode)
+;; (add-hook 'LaTeX-mode-hook 'flyspell-mode)
+;; (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+;; (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+;; (setq reftex-plug-into-AUCTeX t)
+;; (setq TeX-PDF-mode t)
 
 ;; init.el ends here
