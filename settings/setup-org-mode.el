@@ -4,6 +4,9 @@
 (define-key global-map "\C-ca" 'org-agenda)
 (setq org-log-done t)
 
+(eval-after-load "org"
+  '(require 'ox-md nil t))
+
 ;; set maximum indentation for description lists
 (setq org-list-description-max-indent 5)
 

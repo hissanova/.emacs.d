@@ -41,6 +41,7 @@
      auctex
      helm
      org
+     dockerfile-mode
      ))
 
 (mapc #'(lambda (package)
