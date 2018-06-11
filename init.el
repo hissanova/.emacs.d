@@ -42,6 +42,7 @@
      helm
      org
      dockerfile-mode
+     markdown-mode
      ))
 
 (mapc #'(lambda (package)
