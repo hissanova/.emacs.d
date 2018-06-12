@@ -43,6 +43,7 @@
      org
      dockerfile-mode
      markdown-mode
+     json
      ))
 
 (mapc #'(lambda (package)
