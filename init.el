@@ -44,6 +44,9 @@
      dockerfile-mode
      markdown-mode
      json
+     fish-mode
+     paredit
+     expand-region
      ))
 
 (mapc #'(lambda (package)
@@ -69,6 +72,13 @@
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+
+;;keep cursor at same position when scrolling
+(setq scroll-preserve-screen-position 1)
+
+;;scroll window up/down by one line
+(global-set-key (kbd "M-n") (kbd "C-u 1 C-v"))
+(global-set-key (kbd "M-p") (kbd "C-u 1 M-v"))
 
 ;; Write backup files to own directory
 (setq backup-directory-alist
@@ -103,8 +113,6 @@
 ;; hide the startup message
 (setq inhibit-startup-message t) 
 
-;; mapping keybinds of goto-line to goto-line-with-feedback
-(global-set-key [remap goto-line] 'goto-line-with-feedback)
 
 (defun goto-line-with-feedback ()
   "Show line numbers temporarily, while prompting for the line number input"
@@ -115,8 +123,14 @@
         (goto-line (read-number "Goto line: ")))
     (linum-mode -1)))
 
+;; mapping keybinds of goto-line to goto-line-with-feedback
+(global-set-key [remap goto-line] 'goto-line-with-feedback)
+
 ;; key bind C-t to (other-window)
 (global-set-key (kbd "C-t") 'other-window)
+
+;; key bind C-x C-g to magit
+(global-set-key (kbd "C-x C-g") 'magit)
 
 ;; Make dired less verbose
 (require 'dired-subtree)
@@ -137,6 +151,17 @@
 ;; Load settings for org-mode
 (require 'setup-org-mode)
 
+;; paredit
+(require 'paredit)
+(add-hook 'lisp-mode-hook 'paredit-mode)
+
+;; (require 'show-paren)
+(add-hook 'lisp-mode-hook 'show-paren-mode)
+
+;; expand-region
+(require 'expand-region)
+(global-set-key (kbd "C-]") 'er/expand-region)
+		     
 (elpy-enable)
 ;;(elpy-use-ipython)
 

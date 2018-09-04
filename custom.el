@@ -8,7 +8,7 @@
     ("444238426b59b360fb74f46b521933f126778777c68c67841c31e0a68b0cc920" default)))
  '(package-selected-packages
    (quote
-    (zenburn-theme slime sclang-extensions rope-read-mode py-autopep8 pipenv nhexl-mode material-theme magit intero flycheck-mypy elpy elisp-slime-nav ein dired-subtree diminish company-auctex better-defaults))))
+    (expand-region paredit cider zenburn-theme slime sclang-extensions rope-read-mode py-autopep8 pipenv nhexl-mode material-theme magit intero flycheck-mypy elpy elisp-slime-nav ein dired-subtree diminish company-auctex better-defaults))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
