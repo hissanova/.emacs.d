@@ -130,7 +130,7 @@
 (global-set-key (kbd "C-t") 'other-window)
 
 ;; key bind C-x C-g to magit
-(global-set-key (kbd "C-x C-g") 'magit)
+(global-set-key (kbd "C-x C-g") 'magit-status)
 
 ;; Make dired less verbose
 (require 'dired-subtree)
