@@ -173,6 +173,8 @@
 ;; enable autopep8 formatting on save
 (require 'py-autopep8)
 (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+(setq py-autopep8-options '("--max-line-length=120"))
+
 
 (require 'flycheck-mypy)
 (add-to-list 'flycheck-python-mypy-args "--ignore-missing-imports")
