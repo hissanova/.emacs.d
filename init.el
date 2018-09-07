@@ -73,6 +73,9 @@
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
+;; Show column number on the status bar
+(setq column-number-mode t)
+
 ;;keep cursor at same position when scrolling
 (setq scroll-preserve-screen-position 1)
 
