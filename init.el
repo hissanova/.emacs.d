@@ -133,6 +133,7 @@
 
 ;; activate company mode for all buffers
 (add-hook 'after-init-hook 'global-company-mode)
+(setq company-idle-delay 0.1)
 
 ;;hide passwords automatically
 (add-hook 'comint-output-filter-functions
