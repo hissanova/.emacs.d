@@ -9,6 +9,9 @@
                            (invert-face 'mode-line)
                            (run-with-timer 0.05 nil 'invert-face 'mode-line)))
 
+;; Show column number on the status bar
+(setq column-number-mode t)
+
 ;; load zenburn theme
 (load-theme 'zenburn t)
 

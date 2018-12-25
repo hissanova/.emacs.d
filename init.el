@@ -61,20 +61,26 @@
 ;; Set up load path
 (add-to-list 'load-path settings-dir)
 
+;; Setup appearance including theme
+(require 'appearance)
+
+;; Load settings for org-mode
+(require 'setup-org-mode)
+
+;; Load settings for custom key binds
+(require 'custom-keys)
+
+;; Load settings for python dev environment
+(require 'python-env)
+
 ;; Keep emacs Custom-settings in separate file
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file)
-
-;; Setup appearance including theme
-(require 'appearance)
 
 ;; Turn off mouse interface early in startup to avoid momentary display
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-
-;; Show column number on the status bar
-(setq column-number-mode t)
 
 ;;keep cursor at same position when scrolling
 (setq scroll-preserve-screen-position 1)
@@ -116,43 +122,21 @@
 ;; hide the startup message
 (setq inhibit-startup-message t) 
 
-
-(defun goto-line-with-feedback ()
-  "Show line numbers temporarily, while prompting for the line number input"
-  (interactive)
-  (unwind-protect
-      (progn
-        (linum-mode 1)
-        (goto-line (read-number "Goto line: ")))
-    (linum-mode -1)))
-
-;; mapping keybinds of goto-line to goto-line-with-feedback
-(global-set-key [remap goto-line] 'goto-line-with-feedback)
-
-;; key bind C-t to (other-window)
-(global-set-key (kbd "C-t") 'other-window)
-
-;; key bind C-x C-g to magit
-(global-set-key (kbd "C-x C-g") 'magit-status)
-
-;; Make dired less verbose
+;; Let dired to show subtrees
 (require 'dired-subtree)
 (define-key dired-mode-map "i" 'dired-subtree-insert)
 (define-key dired-mode-map ";" 'dired-subtree-remove)
+;; Make dired less verbose
 (add-hook 'dired-mode-hook
-      (lambda ()
-        (dired-hide-details-mode)))
+	  (lambda ()
+	    (dired-hide-details-mode)))
 
 ;; activate company mode for all buffers
 (add-hook 'after-init-hook 'global-company-mode)
 
-
 ;;hide passwords automatically
 (add-hook 'comint-output-filter-functions
 	  'comint-watch-for-password-prompt)
-
-;; Load settings for org-mode
-(require 'setup-org-mode)
 
 ;; paredit
 (require 'paredit)
@@ -165,18 +149,6 @@
 (require 'expand-region)
 (global-set-key (kbd "C-]") 'er/expand-region)
 		     
-(elpy-enable)
-;;(elpy-use-ipython)
-
-;; use flycheck not flymake with elpy
-(when (require 'flycheck nil t)
-  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-  (add-hook 'elpy-mode-hook 'flycheck-mode))
-
-;; enable autopep8 formatting on save
-(require 'py-autopep8)
-(add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
-(setq py-autopep8-options '("--max-line-length=120"))
 
 
 (require 'flycheck-mypy)
