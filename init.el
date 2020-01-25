@@ -139,12 +139,12 @@
 (add-hook 'comint-output-filter-functions
 	  'comint-watch-for-password-prompt)
 
-;; paredit
+;; paredit-mode
 (require 'paredit)
 (add-hook 'lisp-mode-hook 'paredit-mode)
 
-;; (require 'show-paren)
-(add-hook 'lisp-mode-hook 'show-paren-mode)
+;; Turns show-paren-mode on
+(show-paren-mode 1)
 
 ;; expand-region
 (require 'expand-region)
