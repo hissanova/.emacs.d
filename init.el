@@ -2,7 +2,6 @@
 
 ;; INSTALL PACKAGES
 ;; --------------------------------------
-
 (require 'package)
 
 (add-to-list 'package-archives
@@ -28,6 +27,7 @@
      haskell-mode
      sclang-extensions
      slime
+     cider
      nhexl-mode
      zenburn-theme
      material-theme
@@ -39,6 +39,7 @@
      elpy
      ein
      auctex
+     cdlatex
      helm
      org
      dockerfile-mode
@@ -47,7 +48,8 @@
      fish-mode
      paredit
      expand-region
-     ))
+     smartparens
+     buffer-expose))
 
 (mapc #'(lambda (package)
 	  (unless (package-installed-p package)
@@ -61,16 +63,21 @@
 ;; Set up load path
 (add-to-list 'load-path settings-dir)
 
-;; Setup appearance including theme
+(buffer-expose-mode 1)
+
+;; Configure smartparens
+(require 'smartparens-config)
+
+;; Setup appearance including theme .emacs.d/settings/appearance.el
 (require 'appearance)
 
-;; Load settings for org-mode
+;; Load settings for org-mode from .emacs.d/settings/setup-org-mode.el
 (require 'setup-org-mode)
 
-;; Load settings for custom key binds
+;; Load settings for custom key binds from .emacs.d/settings/custom-keys.el
 (require 'custom-keys)
 
-;; Load settings for python dev environment
+;; Load settings for python dev environment from .emacs.d/settings/python-env.el
 (require 'python-env)
 
 ;; Keep emacs Custom-settings in separate file
@@ -149,20 +156,9 @@
 ;; expand-region
 (require 'expand-region)
 (global-set-key (kbd "C-]") 'er/expand-region)
-		     
-
-
-(require 'flycheck-mypy)
-(add-to-list 'flycheck-python-mypy-args "--ignore-missing-imports")
-;; disable other flycheck-checkers for flycheck to select python-mypy checker
-;; this makes flycheck mode to ignore the checkers on flycheck-checkers list
-(setq-default flycheck-disabled-checkers '(python-pylint python-pycompile))
-(flycheck-add-next-checker 'python-flake8 'python-mypy t)
 
 ;; activate upcase-region
 (put 'upcase-region 'disabled nil)
-
-;; --- below this part is taken from macbook 
 
 ;; Set sbcl as default coommon lisp implementation
 (setq inferior-lisp-program "/usr/local/bin/sbcl")
@@ -175,7 +171,7 @@
 
 (setq inferior-haskell-program "/usr/local/bin/ghci")
 
-;; Install Intero
+;; Install Intero for Haskell IDE
 (package-install 'intero)
 (add-hook 'haskell-mode-hook 'intero-mode)
 

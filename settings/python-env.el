@@ -13,5 +13,11 @@
 (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 (setq py-autopep8-options '("--max-line-length=120"))
 
+(require 'flycheck-mypy)
+(add-to-list 'flycheck-python-mypy-args "--ignore-missing-imports")
+;; disable other flycheck-checkers for flycheck to select python-mypy checker
+;; this makes flycheck mode to ignore the checkers on flycheck-checkers list
+(setq-default flycheck-disabled-checkers '(python-pylint python-pycompile))
+(flycheck-add-next-checker 'python-flake8 'python-mypy t)
 
 (provide 'python-env)
