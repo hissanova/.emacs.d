@@ -16,6 +16,9 @@
 ;;syntax highlight code blocks
 (setq org-src-fontify-natively t)
 
+;; highlight latex related texts
+(setq org-highlight-latex-and-related '(latex script entities))
+
 ;; Some initial languages we want org-babel to support
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -23,6 +26,9 @@
    (sh . t)
    (python . t)
    ))
+
+;; Turn on CDlatex
+(add-hook 'org-mode-hook 'org-cdlatex-mode)
 
 (require 'ox-latex)
 (unless (boundp 'org-latex-classes)
