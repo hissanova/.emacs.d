@@ -66,5 +66,34 @@
                ("\\paragraph{%s}" . "\\paragraph*{%s}")
                ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
+;; Replace \( and \) to $ and \[ and \] to $$ in org mode.
+(require 's)
+(require 'dash)
+
+(defun my/org-replace-latex-wrap (text backend _info)
+  (when (org-export-derived-backend-p backend 'md)
+    (cond
+     ((s-starts-with? "\\(" text)
+      (--> text
+	   (s-replace-all '(("\\(" . "$") ("\\)" . "$")) it)))
+     ((s-starts-with? "\\[" text)
+      (--> text
+	   (s-replace-all '(("\\[" . "$$") ("\\]" . "$$")) it))))))
+
+;; (defun my/org-replace-latex-wrap (text backend _info)
+;;   (when (org-export-derived-backend-p backend 'md)
+;;     (cond
+;;      ((s-starts-with? "\\(" text)
+;;       (--> text
+;;            (s-chop-prefix "\\(" it)
+;;            (s-chop-suffix "\\)" it)
+;;            (s-wrap it "$")))
+;;      ((s-starts-with? "\\[" text)
+;;       (--> text
+;;            (s-chop-prefix "\\[" it)
+;;            (s-chop-suffix "\\]" it)
+;;            (s-wrap it "$$"))))))
+
+(add-to-list 'org-export-filter-latex-fragment-functions 'my/org-replace-latex-wrap)
 
 (provide 'setup-org-mode)

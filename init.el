@@ -188,4 +188,11 @@
 ;; (setq reftex-plug-into-AUCTeX t)
 ;; (setq TeX-PDF-mode t)
 
+;; I'm trying to make an interactive function to replace "," with ",\n" in the selected region.
+(defun get-selected-text (start end)
+  (interactive "r")
+    (if (use-region-p)
+        (let ((regionp (buffer-substring start end)))
+            (message regionp))))
+
 ;; init.el ends here
