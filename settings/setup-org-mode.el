@@ -71,6 +71,7 @@
 (require 'dash)
 
 (defun my/org-replace-latex-wrap (text backend _info)
+  "Replaces \( and \) with $, \[ and \] with $$ when the backend is ox/md (org-exporter for markdown)."
   (when (org-export-derived-backend-p backend 'md)
     (cond
      ((s-starts-with? "\\(" text)
