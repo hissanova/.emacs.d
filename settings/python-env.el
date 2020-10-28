@@ -9,9 +9,12 @@
   (add-hook 'elpy-mode-hook 'flycheck-mode))
 
 ;; enable autopep8 formatting on save
-(require 'py-autopep8)
-(add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
-(setq py-autopep8-options '("--max-line-length=120"))
+;; (require 'py-autopep8)
+;; (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+;; (setq py-autopep8-options '("--max-line-length=120"))
+
+(require 'py-yapf)
+(add-hook 'elpy-mode-hook 'py-yapf-enable-on-save)
 
 (require 'flycheck-mypy)
 (add-to-list 'flycheck-python-mypy-args "--ignore-missing-imports")

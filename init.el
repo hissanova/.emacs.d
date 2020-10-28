@@ -34,6 +34,7 @@
      flycheck
      flycheck-mypy
      py-autopep8
+     py-yapf
      rope-read-mode
      pipenv
      elpy
@@ -49,7 +50,8 @@
      paredit
      expand-region
      smartparens
-     buffer-expose))
+     buffer-expose
+     yaml-mode))
 
 (mapc #'(lambda (package)
 	  (unless (package-installed-p package)
@@ -196,3 +198,4 @@
             (message regionp))))
 
 ;; init.el ends here
+(put 'downcase-region 'disabled nil)
