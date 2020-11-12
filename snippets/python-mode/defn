@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: def func(arg):
+# key: def
+# --
+def ${1:func}(${2:arg}${3:})${4:}:
+    ${5:pass}

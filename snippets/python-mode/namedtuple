@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: Namedtuple
+# key: ntuple
+# group: Definitions
+# --
+class ${1:Name}(Namedtuple):
+    ${2:field}: ${3:Type}

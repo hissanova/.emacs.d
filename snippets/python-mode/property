@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: @property
+# key:prop
+# group: Definitions
+# --
+@property
+def ${1:property}(self)${2: -> type}:
+    return ${3:self._$1}
