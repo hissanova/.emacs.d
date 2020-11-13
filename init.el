@@ -175,7 +175,6 @@
 (setq inferior-haskell-program "/usr/local/bin/ghci")
 
 ;; Install Intero for Haskell IDE
-(package-install 'intero)
 (add-hook 'haskell-mode-hook 'intero-mode)
 
 ;; ;; LaTex configurations
