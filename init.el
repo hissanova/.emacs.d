@@ -51,12 +51,17 @@
      expand-region
      smartparens
      buffer-expose
-     yaml-mode))
+     yaml-mode
+     use-package))
 
 (mapc #'(lambda (package)
 	  (unless (package-installed-p package)
 	    (package-install package)))
       myPackages)
+
+(eval-when-compile
+  ;; Following line is not needed if use-package.el is in ~/.emacs.d
+  (require 'use-package))
 
 ;; Set path to dependencies
 (setq settings-dir
@@ -66,10 +71,6 @@
 (add-to-list 'load-path settings-dir)
 
 (buffer-expose-mode 1)
-
-;; Configure smartparens
-(require 'smartparens-config)
-(smartparens-global-mode t)
 
 ;; Setup appearance including theme .emacs.d/settings/appearance.el
 (require 'appearance)
@@ -112,10 +113,15 @@
 (setq-default save-place t)
 (setq save-place-file (expand-file-name ".places" user-emacs-directory))
 
-;; Diminish modeline clutter
-(require 'diminish)
-(diminish 'wrap-region-mode)
-(diminish 'yas/minor-mode)
+(use-package smartparens
+  :config
+  (smartparens-global-mode t))
+
+(use-package diminish
+  :config
+  (diminish 'wrap-region-mode)
+  (diminish 'yas/minor-mode)
+  (diminish 'smartparens-mode))
 
 ;; Elisp go-to-definition with M-. and back again with M-,
 (autoload 'elisp-slime-nav-mode "elisp-slime-nav")
@@ -132,10 +138,11 @@
 ;; hide the startup message
 (setq inhibit-startup-message t) 
 
-;; Let dired to show subtrees
-(require 'dired-subtree)
-(define-key dired-mode-map "i" 'dired-subtree-insert)
-(define-key dired-mode-map ";" 'dired-subtree-remove)
+(use-package dired-subtree
+  :bind (:map dired-mode-map
+	      ("i" . dired-subtree-insert)
+	      ( ";" . dired-subtree-remove)))
+
 ;; Make dired less verbose
 (add-hook 'dired-mode-hook
 	  (lambda ()
@@ -149,9 +156,9 @@
 (add-hook 'comint-output-filter-functions
 	  'comint-watch-for-password-prompt)
 
-;; paredit-mode
-(require 'paredit)
-(add-hook 'lisp-mode-hook 'paredit-mode)
+(use-package paredit
+  :config
+  (add-hook 'lisp-mode-hook 'paredit-mode))
 
 ;; Turns show-paren-mode on
 (show-paren-mode 1)
@@ -199,3 +206,4 @@
 
 ;; init.el ends here
 (put 'downcase-region 'disabled nil)
+
