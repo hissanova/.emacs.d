@@ -69,6 +69,7 @@
 
 ;; Configure smartparens
 (require 'smartparens-config)
+(smartparens-global-mode t)
 
 ;; Setup appearance including theme .emacs.d/settings/appearance.el
 (require 'appearance)
