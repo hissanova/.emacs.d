@@ -97,4 +97,21 @@
 
 (add-to-list 'org-export-filter-latex-fragment-functions 'my/org-replace-latex-wrap)
 
+
+(defun my/org-wrap-latex-macros (text backend _info)
+  "Wraps latex macro-environment region by $$."
+  (when (org-export-derived-backend-p backend 'md)
+    (cond
+     ((s-starts-with? "\\begin" text)
+      (--> text
+	   (s-concat "$$\n" it)
+	   ;; (message (format "%s" (s-matches-p "^.*\\end{.*}.*" it)))
+	   (s-chop-suffix "\n" it)
+	   (s-concat it "$$\n")
+	   ;; (message (format "%s" (s-matched-positions-all "\n" it)))
+	   ;; (message (format "%s" (cdr (last (s-matched-positions-all "\n" it)))))
+	   )))))
+
+(add-to-list 'org-export-filter-plain-text-functions 'my/org-wrap-latex-macros)
+
 (provide 'setup-org-mode)
