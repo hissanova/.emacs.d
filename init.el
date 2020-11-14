@@ -141,12 +141,18 @@
 (use-package dired
   :bind (:map dired-mode-map
 	      ("i" . dired-subtree-insert)
-	      ( ";" . dired-subtree-remove)))
-
-;; Make dired less verbose
-(add-hook 'dired-mode-hook
+	      ( ";" . dired-subtree-remove))
+  :config
+  ;; Make dired less verbose
+  (add-hook 'dired-mode-hook
 	  (lambda ()
-	    (dired-hide-details-mode)))
+	    (dired-hide-details-mode))))
+
+(use-package helm
+  :bind (("M-x" . helm-M-x)
+         ("M-<f5>" . helm-find-files)
+         ([f10] . helm-buffers-list)
+         ([S-f10] . helm-recentf)))
 
 ;; activate company mode for all buffers
 (add-hook 'after-init-hook 'global-company-mode)
