@@ -138,7 +138,7 @@
 ;; hide the startup message
 (setq inhibit-startup-message t) 
 
-(use-package dired-subtree
+(use-package dired
   :bind (:map dired-mode-map
 	      ("i" . dired-subtree-insert)
 	      ( ";" . dired-subtree-remove)))
