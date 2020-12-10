@@ -52,7 +52,8 @@
      smartparens
      buffer-expose
      yaml-mode
-     use-package))
+     use-package
+     web-mode))
 
 (mapc #'(lambda (package)
 	  (unless (package-installed-p package)
@@ -113,15 +114,6 @@
 (setq-default save-place t)
 (setq save-place-file (expand-file-name ".places" user-emacs-directory))
 
-(use-package smartparens
-  :config
-  (smartparens-global-mode t))
-
-(use-package diminish
-  :config
-  (diminish 'wrap-region-mode)
-  (diminish 'yas/minor-mode)
-  (diminish 'smartparens-mode))
 
 ;; Elisp go-to-definition with M-. and back again with M-,
 (autoload 'elisp-slime-nav-mode "elisp-slime-nav")
@@ -137,6 +129,16 @@
 
 ;; hide the startup message
 (setq inhibit-startup-message t) 
+
+(use-package smartparens
+  :config
+  (smartparens-global-mode t))
+
+(use-package diminish
+  :config
+  (diminish 'wrap-region-mode)
+  (diminish 'yas/minor-mode)
+  (diminish 'smartparens-mode))
 
 (use-package dired
   :bind (:map dired-mode-map
@@ -154,6 +156,21 @@
          ([f10] . helm-buffers-list)
          ([S-f10] . helm-recentf)))
 
+(use-package paredit
+  :config
+  (add-hook 'lisp-mode-hook 'paredit-mode))
+
+(use-package web-mode
+  :config
+  (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode)))
+
 ;; activate company mode for all buffers
 (add-hook 'after-init-hook 'global-company-mode)
 (setq company-idle-delay 0.1)
@@ -161,10 +178,6 @@
 ;;hide passwords automatically
 (add-hook 'comint-output-filter-functions
 	  'comint-watch-for-password-prompt)
-
-(use-package paredit
-  :config
-  (add-hook 'lisp-mode-hook 'paredit-mode))
 
 ;; Turns show-paren-mode on
 (show-paren-mode 1)
