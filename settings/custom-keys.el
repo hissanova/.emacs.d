@@ -18,4 +18,10 @@
 ;; key bind C-x C-g to magit
 (global-set-key (kbd "C-x C-g") 'magit-status)
 
+;; key bind C-Shift-SPC
+(global-set-key (kbd "C-S-SPC") nil)
+(global-set-key (kbd "C-S-SPC") 'set-mark-command)
+(global-set-key (kbd "C-SPC") nil)
+(global-set-key (kbd "C-SPC") 'toggle-input-method)
+
 (provide 'custom-keys)
