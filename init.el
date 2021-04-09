@@ -53,7 +53,8 @@
      buffer-expose
      yaml-mode
      use-package
-     web-mode))
+     web-mode
+     ))
 
 (mapc #'(lambda (package)
 	  (unless (package-installed-p package)
@@ -170,6 +171,10 @@
   (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode)))
+
+;; (use-package mozc
+;;   :config
+;;   (setq default-input-method "japanese-mozc"))
 
 ;; activate company mode for all buffers
 (add-hook 'after-init-hook 'global-company-mode)
