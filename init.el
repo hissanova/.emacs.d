@@ -22,7 +22,7 @@
      dired-subtree
      magit
      yasnippet
-     intero
+     ;;intero
      company-auctex
      haskell-mode
      sclang-extensions
@@ -131,6 +131,17 @@
 ;; hide the startup message
 (setq inhibit-startup-message t) 
 
+(use-package paredit
+  :bind (("M-(" . paredit-wrap-round)
+	 ("C-<right>" . paredit-forward-slurp-sexp)
+	 ("C-<left>" . paredit-forward-barf-sexp)))
+;; These setting must run outside use-package for unknown reason
+(autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
+(add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
+(add-hook 'lisp-mode-hook 'enable-paredit-mode)
+(add-hook 'clojure-mode-hook 'enable-paredit-mode)
+(add-hook 'cider-repl-mode-hook 'enable-paredit-mode)
+
 (use-package smartparens
   :config
   (smartparens-global-mode t))
@@ -148,8 +159,8 @@
   :config
   ;; Make dired less verbose
   (add-hook 'dired-mode-hook
-	  (lambda ()
-	    (dired-hide-details-mode))))
+	    (lambda ()
+	      (dired-hide-details-mode))))
 
 (use-package helm
   :bind (("M-x" . helm-M-x)
@@ -157,9 +168,6 @@
          ([f10] . helm-buffers-list)
          ([S-f10] . helm-recentf)))
 
-(use-package paredit
-  :config
-  (add-hook 'lisp-mode-hook 'paredit-mode))
 
 (use-package web-mode
   :config
@@ -171,6 +179,10 @@
   (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode)))
+
+(use-package yasnippet
+  :config
+  (yas-global-mode 1))
 
 ;; (use-package mozc
 ;;   :config
