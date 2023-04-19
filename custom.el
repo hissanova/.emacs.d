@@ -8,7 +8,7 @@
  '(org-agenda-files
    '("~/Documents/math_notes/reading-notes/regular-polytopes.org" "~/projects/e-toyota_gan/kci-gan/tcspcs-release201903/scripts/descriptions.org"))
  '(package-selected-packages
-   '(mozc moz fcitx web-mode use-package py-yapf yaml-mode cdlatex buffer-expose expand-region paredit cider zenburn-theme slime sclang-extensions rope-read-mode py-autopep8 pipenv nhexl-mode material-theme magit intero flycheck-mypy elpy elisp-slime-nav ein dired-subtree diminish company-auctex better-defaults)))
+   '(jinja2-mode mozc moz fcitx web-mode use-package py-yapf yaml-mode cdlatex buffer-expose expand-region paredit cider zenburn-theme slime sclang-extensions rope-read-mode py-autopep8 pipenv nhexl-mode material-theme magit intero flycheck-mypy elpy elisp-slime-nav ein dired-subtree diminish company-auctex better-defaults)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

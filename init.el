@@ -22,7 +22,6 @@
      dired-subtree
      magit
      yasnippet
-     ;;intero
      company-auctex
      haskell-mode
      sclang-extensions
@@ -86,6 +85,9 @@
 ;; Load settings for python dev environment from .emacs.d/settings/python-env.el
 (require 'python-env)
 
+;; Loads settings for Haskell mode
+(require 'haskell-settings)
+
 ;; Keep emacs Custom-settings in separate file
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file)
@@ -132,6 +134,10 @@
 (setq inhibit-startup-message t) 
 
 (use-package paredit
+  :config (add-hook
+	   'paredit-mode-hook
+	   (lambda ()
+	     (smartparens-mode -1)))
   :bind (("M-(" . paredit-wrap-round)
 	 ("C-<right>" . paredit-forward-slurp-sexp)
 	 ("C-<left>" . paredit-forward-barf-sexp)))
@@ -213,12 +219,7 @@
 
 (slime-setup '(slime-repl slime-fancy slime-banner))
 
-;; Set ghc as Haskell inferior programme
 
-(setq inferior-haskell-program "/usr/local/bin/ghci")
-
-;; Install Intero for Haskell IDE
-(add-hook 'haskell-mode-hook 'intero-mode)
 
 ;; ;; LaTex configurations
 ;; (load "auctex.el" nil t t)
@@ -234,11 +235,13 @@
 ;; (setq TeX-PDF-mode t)
 
 ;; I'm trying to make an interactive function to replace "," with ",\n" in the selected region.
+
+
 (defun get-selected-text (start end)
   (interactive "r")
-    (if (use-region-p)
-        (let ((regionp (buffer-substring start end)))
-            (message regionp))))
+  (if (use-region-p)
+      (let ((regionp (buffer-substring start end)))
+	(message regionp))))
 
 ;; init.el ends here
 (put 'downcase-region 'disabled nil)
