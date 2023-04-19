@@ -53,6 +53,7 @@
      yaml-mode
      use-package
      web-mode
+     rainbow-delimiters
      ))
 
 (mapc #'(lambda (package)
@@ -219,7 +220,7 @@
 
 (slime-setup '(slime-repl slime-fancy slime-banner))
 
-
+(add-hook 'prog-mode-hook 'rainbow-delimiters-mode-enable)
 
 ;; ;; LaTex configurations
 ;; (load "auctex.el" nil t t)
